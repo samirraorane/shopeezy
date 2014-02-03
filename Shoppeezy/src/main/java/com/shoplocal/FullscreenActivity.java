@@ -40,7 +40,7 @@ public class FullscreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         l = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
+        String[] values = new String[] { "Pocket List", "Stores", "Products",
                 "Trending" };
 
         //String[] values = getData();

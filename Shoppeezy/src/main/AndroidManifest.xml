@@ -29,9 +29,9 @@
         <activity
             android:name="com.shoplocal.FindStoreActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName="com.shoplocal.FullscreenActivity" >
             android:label="@string/title_activity_find_store"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/FullscreenTheme"
+            android:parentActivityName="com.shoplocal.FullscreenActivity" >
         </activity>
     </application>
 
