@@ -67,12 +67,12 @@ public class ListingAdapter extends BaseAdapter {
         // inflate new layout if null
         if(v == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            v = inflater.inflate(R.layout.store_listview, null);
+            v = inflater.inflate(R.layout.listing_listview, null);
         }
 
         // load controls from layout resources
-        TextView storeName = (TextView)v.findViewById(R.id.storeName);
-        TextView storeDistance = (TextView)v.findViewById(R.id.storeDistance);
+        TextView storeName = (TextView)v.findViewById(R.id.listingName);
+        TextView storeDistance = (TextView)v.findViewById(R.id.listingPrice);
 
         // set data to display
         storeName.setText(name);
