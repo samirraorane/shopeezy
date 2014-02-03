@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class StoreListingsActivity extends Activity {
+public class SearchListingsActivity extends Activity {
 
     private ListView l;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -37,13 +37,11 @@ public class StoreListingsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_store_find);
+        setContentView(R.layout.activity_search_listings);
+        l = (ListView) findViewById(R.id.searchListings);
 
-        l = (ListView) findViewById(R.id.storelist);
-        //String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
-        //       "Trending" };
 
-        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=2478536";
+        final String url = "http://qasl.shoplocal.com/api/listings/citystatezip/60601.json?pagesize=10&resultset=full&searchtext=cheese";
 
         new AsyncApi().execute(url);
 
@@ -53,9 +51,8 @@ public class StoreListingsActivity extends Activity {
         if(values == null){
             values = new JSONArray();
         }
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
-                android.R.layout.simple_list_item_1, values);*/
-        ListingAdapter adapter = new ListingAdapter(this, values);
+
+        SearchListingsAdapter adapter = new SearchListingsAdapter(this, values);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -64,7 +61,7 @@ public class StoreListingsActivity extends Activity {
             {
                 AlertDialog.Builder adb;
                 adb = new AlertDialog.Builder(
-                        StoreListingsActivity.this);
+                        SearchListingsActivity.this);
                 adb.setTitle("ListView OnClick");
                 adb.setMessage("Selected Item is = "
                         + l.getItemAtPosition(position));
@@ -79,13 +76,13 @@ public class StoreListingsActivity extends Activity {
         @Override
         protected JSONArray doInBackground(String... params){
             String URL = params[0];
-            return Api.getResultsFromApi(URL, "Results");
+           return Api.getResultsFromApi(URL, "data");
         }
 
         @Override
         protected void onPostExecute(JSONArray result) {
             super.onPreExecute();
-            StoreListingsActivity.this.doStuff(result);
+            SearchListingsActivity.this.doStuff(result);
         }
     }
 }

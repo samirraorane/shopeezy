@@ -40,6 +40,13 @@
             android:parentActivityName="com.shoplocal.FindStoreActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.shoplocal.SearchListingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_search_product"
+            android:theme="@style/FullscreenTheme"
+            android:parentActivityName="com.shoplocal.FullscreenActivity"  >
+        </activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,13 +53,23 @@ public class FullscreenActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                goToFindStore();
+               if(id == 1){
+                   goToFindStore();
+               }
+               else if(id == 2){
+                    goToSearch();
+               }
             }
         });
     }
 
     private void goToFindStore() {
         Intent intent = new Intent(this, FindStoreActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToSearch() {
+        Intent intent = new Intent(this, SearchListingsActivity.class);
         startActivity(intent);
     }
 }

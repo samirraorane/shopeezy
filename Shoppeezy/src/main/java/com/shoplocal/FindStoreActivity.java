@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.shoplocal.util.Api;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -39,8 +41,6 @@ public class FindStoreActivity extends Activity {
         setContentView(R.layout.activity_store_find);
 
         l = (ListView) findViewById(R.id.storelist);
-        //String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
-        //       "Trending" };
 
         final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Stores?citystatezip=60601&radius=5&storecount=25";
 
@@ -76,50 +76,7 @@ public class FindStoreActivity extends Activity {
         @Override
         protected JSONArray doInBackground(String... params){
             String URL = params[0];
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response = null;
-            try {
-                response = httpclient.execute(new HttpGet(URL));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            StatusLine statusLine = response.getStatusLine();
-            if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                try {
-                    response.getEntity().writeTo(out);
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                String responseString = out.toString();
-                JSONObject json = null;
-                try {
-                    json = new JSONObject(responseString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JSONArray stores = null;
-
-                if (json != null) {
-                    try {
-                        stores = json.getJSONArray("Results");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                return stores;
-            } else{
-                //Closes the connection.
-                try {
-                    response.getEntity().getContent().close();
-                    throw new IOException(statusLine.getReasonPhrase());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
+           return Api.getResultsFromApi(URL, "Results");
         }
 
         @Override

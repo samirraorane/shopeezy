@@ -6,5 +6,9 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_find_store">FindStoreActivity</string>
     <string name="title_activity_store_listings">StoreListings</string>
+    <string name="title_activity_search_product">SearchProduct</string>
+    <string name="searchPlaceholder">Enter Search Term...</string>
+    <string name="searchAction">Search</string>
+    <string name="title_activity_search_activity2">Search2</string>
 
 </resources>
