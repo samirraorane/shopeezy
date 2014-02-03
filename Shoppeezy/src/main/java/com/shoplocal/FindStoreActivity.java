@@ -1,42 +1,58 @@
 package com.shoplocal;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class FindStoreActivity extends Activity {
 
     private ListView l;
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_store_find);
 
         l = (ListView) findViewById(R.id.storelist);
-        /*String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
-                "Trending" };*/
+        //String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
+        //       "Trending" };
 
-        String[] values = getData();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Stores?citystatezip=60601&radius=5&storecount=25";
+
+        new AsyncApi().execute(url);
+
+    }
+
+    public void doStuff(String [] values){
+        if(values == null){
+            values = new String[] {"Broken Piece of Shit"};
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
                 android.R.layout.simple_list_item_1, values);
         l.setAdapter(adapter);
 
@@ -44,7 +60,6 @@ public class FindStoreActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-
                 AlertDialog.Builder adb;
                 adb = new AlertDialog.Builder(
                         FindStoreActivity.this);
@@ -57,39 +72,78 @@ public class FindStoreActivity extends Activity {
         });
     }
 
-    private String[] getData() {
-        try {
-            HttpParams p = new BasicHttpParams();
-            HttpClient httpclient = new DefaultHttpClient(p);
-            String url = "http://vqascweb1.apimvc.crossmediaservices.com/retail/6883099d72e1ca52/2013.1/json/multiretailerpromotions?siteid=1506&MultRetPromoSort=1&pageimagewidth=189&citystatezip=60601";
-            HttpGet httppost = new HttpGet(url);
-            String[] stores = new String[10];
+    public class AsyncApi extends AsyncTask<String, Void, String[]> {
 
-            // Instantiate a GET HTTP method
+        @Override
+        protected String[] doInBackground(String... params){
+            String URL = params[0];
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpResponse response = null;
             try {
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String responseBody = httpclient.execute(httppost,
-                        responseHandler);
-                // Parse
-                JSONObject json = new JSONObject(responseBody);
-                JSONArray jArray = json.getJSONArray("Results");
-
-                for (int i = 0; i < 10; i++) {
-                    JSONObject store = jArray.getJSONObject(i);
-                    stores[i] = store.getString("StoreName");
-                }
-
-                return stores;
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
+                response = httpclient.execute(new HttpGet(URL));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (Throwable t) {
-            Toast.makeText(this, "Request failed: " + t.toString(),
-                    Toast.LENGTH_LONG).show();
+            StatusLine statusLine = response.getStatusLine();
+            if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                try {
+                    response.getEntity().writeTo(out);
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String responseString = out.toString();
+                String [] stores = new String[25];
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(responseString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JSONArray jArray = null;
+                JSONObject pRetailer;
+
+                if (json != null) {
+                    try {
+                        jArray = json.getJSONArray("Results");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject store = null;
+                    try {
+                        store = jArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        pRetailer = store.getJSONObject("PRetailer");
+                        stores[i] = pRetailer.getString("Name");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return stores;
+            } else{
+                //Closes the connection.
+                try {
+                    response.getEntity().getContent().close();
+                    throw new IOException(statusLine.getReasonPhrase());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
         }
 
-        return null;
+        @Override
+        protected void onPostExecute(String [] result) {
+            super.onPreExecute();
+            FindStoreActivity.this.doStuff(result);
+        }
+
     }
 }
