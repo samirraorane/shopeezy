@@ -11,5 +11,6 @@
     <string name="searchAction">Search</string>
     <string name="title_activity_search_activity2">Search2</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_item_detail">ItemDetailActivity</string>
 
 </resources>

@@ -100,6 +100,13 @@ public class SearchListingsActivity extends Activity {
                         + l.getItemAtPosition(position));
                 adb.setPositiveButton("Ok", null);
                 adb.show();
+
+
+                Intent intent = new Intent(SearchListingsActivity.this, ItemDetailActivity.class);
+                intent.putExtra("CAMPAIGN_ID", "52efcba89b8240b8dd8cdf70");
+                intent.putExtra("STORE_ID", "2652663");
+                intent.putExtra("LISTING_ID", "-2045209433");
+                startActivity(intent);
             }
         });
     }
