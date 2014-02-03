@@ -44,8 +44,14 @@
             android:name="com.shoplocal.SearchListingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_search_product"
-            android:theme="@style/FullscreenTheme"
-            android:parentActivityName="com.shoplocal.FullscreenActivity"  >
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name="com.shoplocal.SearchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_search"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 

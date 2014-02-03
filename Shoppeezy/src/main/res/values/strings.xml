@@ -10,5 +10,6 @@
     <string name="searchPlaceholder">Enter Search Term...</string>
     <string name="searchAction">Search</string>
     <string name="title_activity_search_activity2">Search2</string>
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

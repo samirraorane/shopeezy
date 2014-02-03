@@ -69,7 +69,7 @@ public class FullscreenActivity extends Activity {
     }
 
     private void goToSearch() {
-        Intent intent = new Intent(this, SearchListingsActivity.class);
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 }
