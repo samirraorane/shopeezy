@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -48,12 +47,13 @@ public class FindStoreActivity extends Activity {
 
     }
 
-    public void doStuff(String [] values){
+    public void doStuff(JSONArray values){
         if(values == null){
-            values = new String[] {"Broken Piece of Shit"};
+            values = new JSONArray();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
-                android.R.layout.simple_list_item_1, values);
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
+                android.R.layout.simple_list_item_1, values);*/
+        StoreInfoAdapter adapter = new StoreInfoAdapter(this, values);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -72,10 +72,10 @@ public class FindStoreActivity extends Activity {
         });
     }
 
-    public class AsyncApi extends AsyncTask<String, Void, String[]> {
+    public class AsyncApi extends AsyncTask<String, Void, JSONArray> {
 
         @Override
-        protected String[] doInBackground(String... params){
+        protected JSONArray doInBackground(String... params){
             String URL = params[0];
             HttpClient httpclient = new DefaultHttpClient();
             HttpResponse response = null;
@@ -94,38 +94,22 @@ public class FindStoreActivity extends Activity {
                     e.printStackTrace();
                 }
                 String responseString = out.toString();
-                String [] stores = new String[25];
                 JSONObject json = null;
                 try {
                     json = new JSONObject(responseString);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                JSONArray jArray = null;
-                JSONObject pRetailer;
+                JSONArray stores = null;
 
                 if (json != null) {
                     try {
-                        jArray = json.getJSONArray("Results");
+                        stores = json.getJSONArray("Results");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject store = null;
-                    try {
-                        store = jArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        pRetailer = store.getJSONObject("PRetailer");
-                        stores[i] = pRetailer.getString("Name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
                 return stores;
             } else{
                 //Closes the connection.
@@ -140,7 +124,7 @@ public class FindStoreActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(String [] result) {
+        protected void onPostExecute(JSONArray result) {
             super.onPreExecute();
             FindStoreActivity.this.doStuff(result);
         }
