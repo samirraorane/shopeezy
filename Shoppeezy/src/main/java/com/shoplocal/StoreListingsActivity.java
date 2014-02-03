@@ -3,7 +3,6 @@ package com.shoplocal;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class FindStoreActivity extends Activity {
+public class StoreListingsActivity extends Activity {
 
     private ListView l;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -42,7 +41,7 @@ public class FindStoreActivity extends Activity {
         //String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
         //       "Trending" };
 
-        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Stores?citystatezip=60601&radius=5&storecount=25";
+        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=2478536";
 
         new AsyncApi().execute(url);
 
@@ -54,21 +53,23 @@ public class FindStoreActivity extends Activity {
         }
         /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
                 android.R.layout.simple_list_item_1, values);*/
-        StoreInfoAdapter adapter = new StoreInfoAdapter(this, values);
+        ListingAdapter adapter = new ListingAdapter(this, values);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                goToStoreListings();
+                AlertDialog.Builder adb;
+                adb = new AlertDialog.Builder(
+                        StoreListingsActivity.this);
+                adb.setTitle("ListView OnClick");
+                adb.setMessage("Selected Item is = "
+                        + l.getItemAtPosition(position));
+                adb.setPositiveButton("Ok", null);
+                adb.show();
             }
         });
-    }
-
-    public void goToStoreListings() {
-        Intent intent = new Intent(this, StoreListingsActivity.class);
-        startActivity(intent);
     }
 
     public class AsyncApi extends AsyncTask<String, Void, JSONArray> {
@@ -125,8 +126,7 @@ public class FindStoreActivity extends Activity {
         @Override
         protected void onPostExecute(JSONArray result) {
             super.onPreExecute();
-            FindStoreActivity.this.doStuff(result);
+            StoreListingsActivity.this.doStuff(result);
         }
-
     }
 }

@@ -15,6 +15,6 @@
     <declare-styleable name="ButtonBarContainerTheme">
         <attr name="buttonBarStyle" format="reference" />
         <attr name="buttonBarButtonStyle" format="reference" />
-    </declare-styleable>-->
-
+    </declare-styleable>
+    -->
 </resources>

@@ -30,8 +30,15 @@
             android:name="com.shoplocal.FindStoreActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_find_store"
-            android:theme="@style/FullscreenTheme"
-            android:parentActivityName="com.shoplocal.FullscreenActivity" >
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name="com.shoplocal.StoreListingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_store_listings"
+            android:parentActivityName="com.shoplocal.FindStoreActivity"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 
