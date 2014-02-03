@@ -3,6 +3,7 @@ package com.shoplocal;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,15 +36,16 @@ public class StoreListingsActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        Intent intent = getIntent();
+        String storeId = intent.getStringExtra(FindStoreActivity.STORE_INFO);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_store_find);
 
         l = (ListView) findViewById(R.id.storelist);
-        //String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
-        //       "Trending" };
 
-        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=2478536";
+        final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=" + storeId;
 
         new AsyncApi().execute(url);
 

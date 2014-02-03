@@ -29,7 +29,9 @@ import java.io.IOException;
 
 public class FindStoreActivity extends Activity {
 
+    public final static String STORE_INFO = "com.shoplocal.store_info";
     private ListView l;
+    private JSONArray stores;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,8 @@ public class FindStoreActivity extends Activity {
         if(values == null){
             values = new JSONArray();
         }
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
-                android.R.layout.simple_list_item_1, values);*/
+
+        stores = values;
         StoreInfoAdapter adapter = new StoreInfoAdapter(this, values);
         l.setAdapter(adapter);
 
@@ -61,14 +63,29 @@ public class FindStoreActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                goToStoreListings();
+                goToStoreListings(position);
             }
         });
     }
 
-    public void goToStoreListings() {
+    public void goToStoreListings(int position) {
+        String storeId = getStoreID(position);
         Intent intent = new Intent(this, StoreListingsActivity.class);
+        intent.putExtra(STORE_INFO, storeId);
         startActivity(intent);
+    }
+
+    private String getStoreID(int position) {
+        String storeId = null;
+
+        try {
+            JSONObject store = stores.getJSONObject(position);
+            storeId = store.getString("ID");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return storeId;
     }
 
     public class AsyncApi extends AsyncTask<String, Void, JSONArray> {
