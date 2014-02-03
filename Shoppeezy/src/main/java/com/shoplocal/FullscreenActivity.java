@@ -2,10 +2,12 @@ package com.shoplocal;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,10 +40,10 @@ public class FullscreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         l = (ListView) findViewById(R.id.listview);
-        /*String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
-                "Trending" };*/
+        String[] values = new String[] { "Pocket List", "Search Store", "Search Product",
+                "Trending" };
 
-        String[] values = getData();
+        //String[] values = getData();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         l.setAdapter(adapter);
@@ -50,52 +52,13 @@ public class FullscreenActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-
-                AlertDialog.Builder adb;
-                adb = new AlertDialog.Builder(
-                        FullscreenActivity.this);
-                adb.setTitle("ListView OnClick");
-                adb.setMessage("Selected Item is = "
-                        + l.getItemAtPosition(position));
-                adb.setPositiveButton("Ok", null);
-                adb.show();
+                goToFindStore();
             }
         });
     }
 
-    private String[] getData() {
-        try {
-            HttpParams p = new BasicHttpParams();
-            HttpClient httpclient = new DefaultHttpClient(p);
-            String url = "http://vqascweb1.apimvc.crossmediaservices.com/retail/6883099d72e1ca52/2013.1/json/multiretailerpromotions?siteid=1506&MultRetPromoSort=1&pageimagewidth=189&citystatezip=60601";
-            HttpGet httppost = new HttpGet(url);
-            String[] stores = new String[10];
-
-            // Instantiate a GET HTTP method
-            try {
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String responseBody = httpclient.execute(httppost,
-                        responseHandler);
-                // Parse
-                JSONObject json = new JSONObject(responseBody);
-                JSONArray jArray = json.getJSONArray("Results");
-
-                for (int i = 0; i < 10; i++) {
-                    JSONObject store = jArray.getJSONObject(i);
-                    stores[i] = store.getString("StoreName");
-                }
-
-                return stores;
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (Throwable t) {
-            Toast.makeText(this, "Request failed: " + t.toString(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-        return null;
+    private void goToFindStore() {
+        Intent intent = new Intent(this, FindStoreActivity.class);
+        startActivity(intent);
     }
 }
