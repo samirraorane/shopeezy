@@ -1,15 +1,22 @@
 package com.shoplocal;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
 
 public class SearchListingsAdapter extends BaseAdapter {
     private Context mContext;
@@ -53,10 +60,13 @@ public class SearchListingsAdapter extends BaseAdapter {
 
         String name = "";
         String retailer = "";
+        String imageUrl = "";
 
         try {
             name = listing.getString("title");
             retailer = listing.getJSONObject("pretailer").getString("pretailer_name");
+            imageUrl = listing.getString("listing_image_url");
+            imageUrl = imageUrl.replace("200", "100");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -67,18 +77,45 @@ public class SearchListingsAdapter extends BaseAdapter {
         // inflate new layout if null
         if(v == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            v = inflater.inflate(R.layout.store_listview, null);
+            v = inflater.inflate(R.layout.listing_listview, null);
         }
 
         // load controls from layout resources
-        TextView storeName = (TextView)v.findViewById(R.id.storeName);
-        TextView storeDistance = (TextView)v.findViewById(R.id.storeDistance);
+        TextView listingName = (TextView)v.findViewById(R.id.listingName);
+        TextView listingPrice = (TextView)v.findViewById(R.id.listingPrice);
+        new DownloadImageTask((ImageView) v.findViewById(R.id.listingImage))
+                .execute(imageUrl);
 
         // set data to display
-        storeName.setText(name);
-        storeDistance.setText(retailer);
+        listingName.setText(name);
+        listingPrice.setText(retailer);
 
         // return view
         return v;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

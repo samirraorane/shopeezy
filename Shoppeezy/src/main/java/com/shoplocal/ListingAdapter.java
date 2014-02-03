@@ -81,14 +81,14 @@ public class ListingAdapter extends BaseAdapter {
         }
 
         // load controls from layout resources
-        TextView storeName = (TextView)v.findViewById(R.id.listingName);
-        TextView storeDistance = (TextView)v.findViewById(R.id.listingPrice);
+        TextView listingName = (TextView)v.findViewById(R.id.listingName);
+        TextView listingPrice = (TextView)v.findViewById(R.id.listingPrice);
         new DownloadImageTask((ImageView) v.findViewById(R.id.listingImage))
                 .execute(imageUrl);
 
         // set data to display
-        storeName.setText(name);
-        storeDistance.setText("$" + price);
+        listingName.setText(name);
+        listingPrice.setText("$" + price);
 
         // return view
         return v;
