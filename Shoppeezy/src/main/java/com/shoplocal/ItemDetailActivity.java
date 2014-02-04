@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shoplocal.util.Api;
@@ -25,6 +26,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -36,11 +38,15 @@ import java.net.URL;
 
 public class ItemDetailActivity extends Activity {
 
+    TextView title, price, description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_item_detail);
+
+        title = (TextView) findViewById(R.id.itemTitle);
+        price = (TextView) findViewById(R.id.itemPrice);
 
 
         Intent intent = getIntent();
@@ -51,8 +57,9 @@ public class ItemDetailActivity extends Activity {
         String url = "http://api2.shoplocal.com/retail/"+campaignId+"/2013.1/json/Listing?storeid="+storeId+"&listingid=" + listingId;
         new AsyncApi().execute(url);
     }
-    public void doStuff(JSONObject value){
-
+    public void doStuff(JSONObject value) throws JSONException {
+        Log.v("ShopLocal", value.toString());
+        title.setText(value.getString("Title"));
     }
 
     public class AsyncApi extends AsyncTask<String, Void, JSONObject> {
@@ -66,7 +73,11 @@ public class ItemDetailActivity extends Activity {
         @Override
         protected void onPostExecute(JSONObject result) {
             super.onPreExecute();
-            ItemDetailActivity.this.doStuff(result);
+            try {
+                ItemDetailActivity.this.doStuff(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
