@@ -66,7 +66,7 @@ public class ListingAdapter extends BaseAdapter {
             name = listing.getString("Title");
             price = listing.getString("FinalPrice");
             imageUrl = listing.getString("ImageLocation");
-            imageUrl = imageUrl.replace("200", "100");
+            imageUrl = imageUrl.replace("200", "150");
         } catch (JSONException e) {
             e.printStackTrace();
         }
