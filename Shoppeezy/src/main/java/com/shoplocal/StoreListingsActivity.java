@@ -38,11 +38,14 @@ public class StoreListingsActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         Intent intent = getIntent();
-        storeId = intent.getStringExtra(FindStoreActivity.STORE_INFO);
+        storeId = intent.getStringExtra(FindStoreActivity.STORE_ID);
+        String storeName = intent.getStringExtra(FindStoreActivity.STORE_NAME);
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_store_find);
+
+        setTitle("Deals At " + storeName);
 
         l = (ListView) findViewById(R.id.storelist);
 

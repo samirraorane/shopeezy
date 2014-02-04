@@ -29,7 +29,8 @@ import java.io.IOException;
 
 public class FindStoreActivity extends Activity {
 
-    public final static String STORE_INFO = "com.shoplocal.store_info";
+    public final static String STORE_ID = "com.shoplocal.store_id";
+    public final static String STORE_NAME = "com.shoplocal.store_name";
     private ListView l;
     private JSONArray stores;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -55,8 +56,8 @@ public class FindStoreActivity extends Activity {
             values = new JSONArray();
         }
 
-        stores = values;
-        StoreInfoAdapter adapter = new StoreInfoAdapter(this, values);
+        stores = getStoresWithContent(values);
+        StoreInfoAdapter adapter = new StoreInfoAdapter(this, stores);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -68,24 +69,43 @@ public class FindStoreActivity extends Activity {
         });
     }
 
-    public void goToStoreListings(int position) {
-        String storeId = getStoreID(position);
-        Intent intent = new Intent(this, StoreListingsActivity.class);
-        intent.putExtra(STORE_INFO, storeId);
-        startActivity(intent);
+    private JSONArray getStoresWithContent(JSONArray values) {
+        JSONArray storesWithContent = new JSONArray();
+
+        JSONObject store;
+        int promotionCount;
+        for (int i=0; i<values.length(); i++) {
+            try {
+                store = values.getJSONObject(i);
+                promotionCount = store.getInt("CurrentPromotionCount");
+                if (promotionCount > 0) {
+                    storesWithContent.put(store);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return storesWithContent;
     }
 
-    private String getStoreID(int position) {
-        String storeId = null;
-
+    public void goToStoreListings(int position) {
+        String storeId = "";
+        String storeName = "";
+        JSONObject pRetailer;
         try {
             JSONObject store = stores.getJSONObject(position);
             storeId = store.getString("ID");
+            pRetailer = store.getJSONObject("PRetailer");
+            storeName = pRetailer.getString("Name");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return storeId;
+        Intent intent = new Intent(this, StoreListingsActivity.class);
+        intent.putExtra(STORE_ID, storeId);
+        intent.putExtra(STORE_NAME, storeName);
+        startActivity(intent);
     }
 
     public class AsyncApi extends AsyncTask<String, Void, JSONArray> {
