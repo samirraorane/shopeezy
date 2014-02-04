@@ -3,7 +3,6 @@ package com.shoplocal;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -36,7 +35,7 @@ import java.io.IOException;
 public class SearchListingsActivity extends Activity {
 
     private ListView l;
-    ProgressDialog progress;
+
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +43,6 @@ public class SearchListingsActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
-
-        progress = new ProgressDialog(this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.show();
 
         setContentView(R.layout.activity_search_listings);
         l = (ListView) findViewById(R.id.searchListings);
@@ -63,6 +57,8 @@ public class SearchListingsActivity extends Activity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
+        MenuItem item = menu.findItem(R.id.action_add_to_favorites);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -128,8 +124,6 @@ public class SearchListingsActivity extends Activity {
         protected void onPostExecute(JSONArray result) {
             super.onPreExecute();
             SearchListingsActivity.this.doStuff(result);
-
-            progress.dismiss();
         }
     }
 }
