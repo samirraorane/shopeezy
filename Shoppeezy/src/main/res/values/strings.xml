@@ -4,13 +4,13 @@
     <string name="app_name">G/O Shop</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_find_store">FindStoreActivity</string>
-    <string name="title_activity_store_listings">StoreListings</string>
-    <string name="title_activity_search_product">SearchProduct</string>
+    <string name="title_activity_find_store">Select Your Store</string>
+    <string name="title_activity_store_listings">Store Deals</string>
+    <string name="title_activity_search_product">Search Results</string>
     <string name="searchPlaceholder">Enter Search Term...</string>
     <string name="searchAction">Search</string>
     <string name="title_activity_search_activity2">Search2</string>
-    <string name="title_activity_search">SearchActivity</string>
-    <string name="title_activity_item_detail">ItemDetailActivity</string>
+    <string name="title_activity_search">Search Product</string>
+    <string name="title_activity_item_detail">Product Detail</string>
 
 </resources>
