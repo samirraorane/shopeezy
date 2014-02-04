@@ -10,6 +10,7 @@
     <string name="searchPlaceholder">Enter Search Term...</string>
     <string name="searchAction">Search</string>
     <string name="pocketString">Save to Pocket</string>
+    <string name="trendString">Heart this</string>
     <string name="title_activity_search_activity2">Search2</string>
     <string name="title_activity_search">Search Product</string>
     <string name="title_activity_item_detail">Product Detail</string>

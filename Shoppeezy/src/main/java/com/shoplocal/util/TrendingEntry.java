@@ -21,6 +21,16 @@ public class TrendingEntry {
         this._trendVote = 1;
     }
 
+    public TrendingEntry(String id, String storeid, String title, String price, String desc, String img, int trend){
+        this._id = id;
+        this._storeid = storeid;
+        this._title = title;
+        this._price = price;
+        this._description = desc;
+        this._img = img;
+        this._trendVote = trend;
+    }
+
     public String getId(){
         return this._id;
     }

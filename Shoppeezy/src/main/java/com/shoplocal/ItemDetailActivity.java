@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.shoplocal.util.Api;
 import com.shoplocal.util.PocketEntry;
 import com.shoplocal.util.SqlHelper;
+import com.shoplocal.util.SqlHelperTrending;
+import com.shoplocal.util.TrendingEntry;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -48,11 +50,12 @@ import static android.app.PendingIntent.getActivity;
 public class ItemDetailActivity extends Activity {
 
     TextView title, price, description, deal;
-    Button pocketBtn;
+    Button pocketBtn, trendingBtn;
     String storeId, listingId, imageUrl;
     Boolean readyState = false;
     ProgressDialog progress;
     SqlHelper db;
+    SqlHelperTrending dbTrending;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,10 @@ public class ItemDetailActivity extends Activity {
         description = (TextView) findViewById(R.id.itemDescription);
         deal = (TextView) findViewById(R.id.itemDeal);
         pocketBtn = (Button)findViewById(R.id.pocketBtn);
+        trendingBtn = (Button)findViewById(R.id.trendBtn);
+
         db = new SqlHelper(this);
+        dbTrending = new SqlHelperTrending(this);
 
 
         Intent intent = getIntent();
@@ -93,6 +99,21 @@ public class ItemDetailActivity extends Activity {
             pocketBtn.setText("Added to Pocket");
             db.close();
         }
+    }
+
+    public void trendVote(View view){
+        if(!trendingBtn.getText().toString().equals("Hearted this")){
+            String _title = title.getText().toString();
+            String _price = price.getText().toString();
+            String _description = description.getText().toString();
+            int votes = dbTrending.getTrendListing(listingId);
+            votes = votes == -1 ? 1 : votes++;
+            TrendingEntry trend = new TrendingEntry(listingId, storeId, _title, _price, _description, imageUrl, votes);
+            trendingBtn.setText("Hearted this");
+
+            dbTrending.updateTrending(trend);
+        }
+
     }
 
     public void doStuff(JSONObject value) throws JSONException {

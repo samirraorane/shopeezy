@@ -72,6 +72,17 @@
             android:textColor="#ffffff"
             android:onClick="saveToPocket" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trendString"
+            android:id="@+id/trendBtn"
+            android:layout_below="@+id/pocketBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/pocketBtn"
+            android:onClick="trendVote"
+            android:textColor="#ffffff" />
+
     </RelativeLayout>
 
     <!-- This FrameLayout insets its children based on system windows using
