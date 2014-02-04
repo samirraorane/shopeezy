@@ -47,16 +47,15 @@
             android:layout_gravity="left|top"
             android:id="@+id/searchText" />
 
-        <Button android:id="@+id/searchBtn"
-            style="?buttonBarButtonStyle"
-            android:layout_width="fill_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/searchAction"
+            android:id="@+id/searchBtn"
+            android:layout_centerHorizontal="true"
             android:onClick="processSearch"
-            android:layout_gravity="center"
-            android:layout_below="@+id/searchText"
-            android:layout_alignParentLeft="true" />
+            android:layout_below="@+id/searchText" />
+
     </RelativeLayout>
 
 </FrameLayout>
