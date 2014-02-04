@@ -51,14 +51,17 @@ public class StoreInfoAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        JSONObject pRetailer;
+        JSONObject pRetailer, address;
         String name = "";
         String distance = "";
+        String storeAddr = "";
 
         try {
             pRetailer = store.getJSONObject("PRetailer");
             name = pRetailer.getString("Name");
             distance = store.getString("Distance");
+            address = store.getJSONObject("Address");
+            storeAddr = address.getString("Line1");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -75,10 +78,12 @@ public class StoreInfoAdapter extends BaseAdapter {
         // load controls from layout resources
         TextView storeName = (TextView)v.findViewById(R.id.storeName);
         TextView storeDistance = (TextView)v.findViewById(R.id.storeDistance);
+        TextView storeAddress = (TextView)v.findViewById(R.id.storeAddress);
 
         // set data to display
         storeName.setText(name);
         storeDistance.setText(distance + "m");
+        storeAddress.setText(storeAddr);
 
         // return view
         return v;
