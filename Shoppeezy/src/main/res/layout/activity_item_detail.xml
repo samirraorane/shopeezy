@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#ff74a5cc"
     tools:context=".ItemDetailActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -11,25 +11,28 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="right|bottom">
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/itemDescription"
-            android:text="Description"
-            android:layout_marginTop="89dp"
+            android:id="@+id/itemTitle"
+            android:text="Title"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:textSize="26sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deal"
-            android:id="@+id/itemDeal"
-            android:layout_below="@+id/itemDescription"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="44dp" />
+            android:id="@+id/itemPrice"
+            android:text="Price"
+            android:layout_below="@+id/itemTitle"
+            android:textSize="26sp"
+            android:textColor="#cc0000"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -42,30 +45,27 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pocketString"
+            android:text="Save to Pocket"
             android:id="@+id/pocketBtn"
             android:layout_alignTop="@+id/listingImage"
             android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemDescription"
+            android:text="Description"
+            android:layout_below="@+id/listingImage"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deal"
+            android:id="@+id/itemDeal"
+            android:layout_below="@+id/itemDescription" />
+
+
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/itemPrice"
-        android:layout_gravity="left|top"
-        android:layout_alignRight="@+id/itemTitle"
-        android:text="Price"
-        android:layout_alignParentBottom="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/itemTitle"
-        android:layout_marginTop="44dp"
-        android:text="Title"
-        android:layout_below="@+id/itemPrice"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="50dp" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
