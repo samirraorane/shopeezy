@@ -1,91 +1,97 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#ff74a5cc"
-    tools:context=".ItemDetailActivity">
+    tools:context=".ItemDetailActivity"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemTitle"
-            android:text="Title"
+        <!-- The primary full-screen view. This can be replaced with whatever view
+             is needed to present your content, e.g. VideoView, SurfaceView,
+             TextureView, etc. -->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
-            android:textSize="26sp"
-            android:textColor="#ffffff"/>
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemPrice"
-            android:text="Price"
-            android:layout_below="@+id/itemTitle"
-            android:textSize="26sp"
-            android:textColor="#000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemTitle"
+                android:text="Title"
+                android:layout_alignParentTop="true"
+                android:textSize="26sp"
+                android:textColor="#ffffff"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listingImage"
-            android:layout_below="@+id/itemPrice"
-            android:layout_centerHorizontal="true"
-            android:textColor="#ffffff"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemPrice"
+                android:text="Price"
+                android:layout_below="@+id/itemTitle"
+                android:textSize="26sp"
+                android:textColor="#000000"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemDescription"
-            android:text="Description"
-            android:layout_below="@+id/listingImage"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="10dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listingImage"
+                android:layout_below="@+id/itemPrice"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ffffff"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Deal"
-            android:id="@+id/itemDeal"
-            android:layout_below="@+id/itemDescription"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemDescription"
+                android:text="Description"
+                android:layout_below="@+id/listingImage"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="10dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save to Pocket"
-            android:id="@+id/pocketBtn"
-            android:layout_below="@+id/itemDeal"
-            android:textColor="#ffffff"
-            android:onClick="saveToPocket" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deal"
+                android:id="@+id/itemDeal"
+                android:layout_below="@+id/itemDescription"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="10dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/trendString"
-            android:id="@+id/trendBtn"
-            android:layout_below="@+id/pocketBtn"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/pocketBtn"
-            android:onClick="trendVote"
-            android:textColor="#ffffff" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save to Pocket"
+                android:id="@+id/pocketBtn"
+                android:layout_below="@+id/itemDeal"
+                android:textColor="#ffffff"
+                android:onClick="saveToPocket" />
 
-    </RelativeLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trendString"
+                android:id="@+id/trendBtn"
+                android:layout_below="@+id/pocketBtn"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/pocketBtn"
+                android:onClick="trendVote"
+                android:textColor="#ffffff" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
+        </RelativeLayout>
 
-</FrameLayout>
+        <!-- This FrameLayout insets its children based on system windows using
+             android:fitsSystemWindows. -->
+
+    </FrameLayout>
+</ScrollView>
