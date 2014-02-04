@@ -23,7 +23,8 @@
             android:id="@+id/itemTitle"
             android:text="Title"
             android:layout_alignParentTop="true"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:textColor="#ffffff"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,39 +33,43 @@
             android:text="Price"
             android:layout_below="@+id/itemTitle"
             android:textSize="26sp"
-            android:textColor="#cc0000"/>
+            android:textColor="#000000"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listingImage"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="86dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save to Pocket"
-            android:id="@+id/pocketBtn"
-            android:layout_alignTop="@+id/listingImage"
-            android:layout_alignParentLeft="true"
-            android:onClick="saveToPocket" />
+            android:layout_below="@+id/itemPrice"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/itemDescription"
             android:text="Description"
-            android:layout_below="@+id/listingImage"/>
+            android:layout_below="@+id/listingImage"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Deal"
             android:id="@+id/itemDeal"
-            android:layout_below="@+id/itemDescription" />
+            android:layout_below="@+id/itemDescription"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="10dp"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save to Pocket"
+            android:id="@+id/pocketBtn"
+            android:layout_below="@+id/itemDeal"
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 
