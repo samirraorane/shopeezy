@@ -94,6 +94,11 @@ public class ListingAdapter extends BaseAdapter {
         return v;
     }
 
+    public void updateReceiptsList(JSONArray newlist) {
+        mlistings = newlist;
+        this.notifyDataSetChanged();
+    }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

@@ -8,8 +8,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.shoplocal.util.Api;
@@ -31,6 +34,8 @@ public class StoreListingsActivity extends Activity {
 
     private ListView l;
     private String storeId;
+    EditText inputSearch;
+    ListingAdapter adapter;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +48,52 @@ public class StoreListingsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_store_find);
+        setContentView(R.layout.activity_listings_store);
 
         setTitle("Deals At " + storeName);
 
-        l = (ListView) findViewById(R.id.storelist);
+        l = (ListView) findViewById(R.id.storelistings);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
+        /*inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                searchStoreListings();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            @Override
+            public void afterTextChanged(Editable arg0) {}
+        });*/
 
         final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=" + storeId;
-
         new AsyncApi().execute(url);
+    }
 
+    public void searchStoreListings(View view) {
+        String searchText = inputSearch.getText().toString();
+
+        if (searchText != "") {
+            String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/SearchListings?storeid=" + storeId + "&searchtext=" + searchText;
+            new AsyncApi().execute(url);
+        } else {
+            String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=" + storeId;
+            new AsyncApi().execute(url);
+        }
     }
 
     public void doStuff(JSONArray values){
         if(values == null){
             values = new JSONArray();
         }
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(FindStoreActivity.this,
-                android.R.layout.simple_list_item_1, values);*/
-        ListingAdapter adapter = new ListingAdapter(this, values);
-        l.setAdapter(adapter);
+
+        if (adapter == null) {
+            adapter = new ListingAdapter(this, values);
+            l.setAdapter(adapter);
+        } else {
+            adapter.updateReceiptsList(values);
+        }
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
