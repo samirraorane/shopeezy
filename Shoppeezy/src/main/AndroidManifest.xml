@@ -59,6 +59,12 @@
             android:label="@string/title_activity_item_detail"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.shoplocal.PocketListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_pocket_list"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
     </application>
 
 </manifest>

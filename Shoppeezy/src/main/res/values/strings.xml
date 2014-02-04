@@ -13,5 +13,6 @@
     <string name="title_activity_search_activity2">Search2</string>
     <string name="title_activity_search">Search Product</string>
     <string name="title_activity_item_detail">Product Detail</string>
+    <string name="title_activity_pocket_list">Pocket List</string>
 
 </resources>
