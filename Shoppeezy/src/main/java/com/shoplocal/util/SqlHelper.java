@@ -72,20 +72,25 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
     // Getting single contact
-    PocketEntry getPocketListing(int id) {
+    public String getPocketListing(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_LISTINGS, new String[] { KEY_ID,
                 KEY_STOREID,KEY_TITLE,KEY_PRICE,KEY_DESC, KEY_IMG }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+                new String[] { id }, null, null, null, null);
 
-        PocketEntry pocket = new PocketEntry(cursor.getString(0),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5));
+        PocketEntry pocket = null;
+       try{
+           if (cursor != null){
+               cursor.moveToFirst();
 
-        return pocket;
+               return cursor.getString(0);
+           }
+
+       }catch(Exception e){
+
+       }
+        return null;
     }
 
     // Getting All Contacts

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,7 +47,9 @@ import static android.app.PendingIntent.getActivity;
 public class ItemDetailActivity extends Activity {
 
     TextView title, price, description, deal;
+    Button pocketBtn;
     String storeId, listingId, imageUrl;
+    Boolean readyState = false;
     SqlHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class ItemDetailActivity extends Activity {
         price = (TextView) findViewById(R.id.itemPrice);
         description = (TextView) findViewById(R.id.itemDescription);
         deal = (TextView) findViewById(R.id.itemDeal);
+        pocketBtn = (Button)findViewById(R.id.pocketBtn);
         db = new SqlHelper(this);
 
 
@@ -69,22 +73,19 @@ public class ItemDetailActivity extends Activity {
         new AsyncApi().execute(url);
     }
 
-    public void saveToPocket(View view){
-        // 1. Instantiate an AlertDialog.Builder with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage("Adding to Pocket")
-                .setTitle("Adding to Pocket");
+    public void saveToPocket(View view){
 
         String _title = title.getText().toString();
         String _price = price.getText().toString();
         String _description = description.getText().toString();
 
-
-        PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description, imageUrl);
-        db.addPocketEntry(p);
-
-        AlertDialog dialog = builder.create();
+        if(!pocketBtn.getText().toString().equals("Added to Pocket")){
+            PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description, imageUrl);
+            db.addPocketEntry(p);
+            pocketBtn.setText("Added to Pocket");
+            db.close();
+        }
     }
 
     public void doStuff(JSONObject value) throws JSONException {
@@ -92,6 +93,13 @@ public class ItemDetailActivity extends Activity {
         price.setText("$" + value.getString("FinalPrice"));
         description.setText(value.getString("Description"));
         deal.setText(value.getString("Deal"));
+        String listingId = value.getString("ID");
+
+        String pocketEntry = db.getPocketListing(listingId);
+
+        if(pocketEntry != null){
+            pocketBtn.setText("Added to Pocket");
+        }
 
         imageUrl = value.getString("ImageLocation");
 
@@ -140,6 +148,7 @@ public class ItemDetailActivity extends Activity {
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+            readyState = true;
         }
     }
 }

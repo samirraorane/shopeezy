@@ -55,5 +55,7 @@ public class PocketListActivity extends Activity {
 
         PocketListingAdapter adapter = new PocketListingAdapter(this, list);
         l.setAdapter(adapter);
+
+        db.close();
     }
 }

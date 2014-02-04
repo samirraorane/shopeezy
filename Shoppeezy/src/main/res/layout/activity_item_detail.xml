@@ -69,7 +69,8 @@
             android:text="Save to Pocket"
             android:id="@+id/pocketBtn"
             android:layout_below="@+id/itemDeal"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:onClick="saveToPocket" />
 
     </RelativeLayout>
 
