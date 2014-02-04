@@ -11,12 +11,14 @@ import android.widget.ListView;
 
 import com.shoplocal.util.PocketEntry;
 import com.shoplocal.util.SqlHelper;
+import com.shoplocal.util.SqlHelperTrending;
+import com.shoplocal.util.TrendingEntry;
 
 import java.util.List;
 
 public class TrendingListActivity extends Activity {
 
-    SqlHelper db;
+    SqlHelperTrending db;
     private ListView l;
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -25,14 +27,14 @@ public class TrendingListActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        db = new SqlHelper(this);
+        db = new SqlHelperTrending(this);
 
-        List<PocketEntry> list = db.getAllPocketEntries();
+        List<TrendingEntry> list = db.getAllTrendingEntries();
 
         setContentView(R.layout.activity_trending_list);
         l = (ListView) findViewById(R.id.trendingListView);
 
-        PocketListingAdapter adapter = new PocketListingAdapter(this, list);
+        TrendingListAdapter adapter = new TrendingListAdapter(this, list);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()

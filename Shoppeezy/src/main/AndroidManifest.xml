@@ -72,7 +72,6 @@
             android:name="com.shoplocal.TrendingListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_trending"
-            android:parentActivityName="com.shoplocal.FullscreenActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
