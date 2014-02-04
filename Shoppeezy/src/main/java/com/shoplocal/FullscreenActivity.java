@@ -54,7 +54,7 @@ public class FullscreenActivity extends Activity {
                if(id == 0){
                    goToPocketList();
                } else if(id == 1) {
-                   goToFindStore();
+                   goToSavedStore();
                } else if(id == 2){
                    goToFindStore();
                }
@@ -66,6 +66,11 @@ public class FullscreenActivity extends Activity {
                }
             }
         });
+    }
+
+    private void goToSavedStore() {
+        Intent intent = new Intent(this, SavedStoresActivity.class);
+        startActivity(intent);
     }
 
     private void goToPocketList() {

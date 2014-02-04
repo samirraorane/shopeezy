@@ -74,6 +74,12 @@
             android:label="@string/title_activity_trending"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.shoplocal.SavedStoresActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_saved_stores"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
     </application>
 
 </manifest>
