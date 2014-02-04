@@ -56,7 +56,7 @@ public class FindStoreActivity extends Activity {
             values = new JSONArray();
         }
 
-        stores = getStoresWithContent(values);
+        stores = values;
         StoreInfoAdapter adapter = new StoreInfoAdapter(this, stores);
         l.setAdapter(adapter);
 
