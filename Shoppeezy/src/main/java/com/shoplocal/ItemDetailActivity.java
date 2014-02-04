@@ -82,7 +82,7 @@ public class ItemDetailActivity extends Activity {
         storeId = intent.getStringExtra("STORE_ID");
         listingId = intent.getStringExtra("LISTING_ID");
 
-        String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Listing?storeid="+ storeId +"&listingid=" + listingId;
+        String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Listing?storeid="+ storeId +"&listingid=" + listingId + "&imagesize=350";
         new AsyncApi().execute(url);
     }
 
