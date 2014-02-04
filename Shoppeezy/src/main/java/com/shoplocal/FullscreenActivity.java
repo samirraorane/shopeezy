@@ -41,29 +41,27 @@ public class FullscreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         l = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Pocket List", "Stores", "Products",
+        String[] values = new String[] { "Pocket List", "Saved Stores", "Nearby Stores", "Products",
                 "Trending" };
 
-        //String[] values = getData();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
+        HomeAdapter adapter = new HomeAdapter (this, values);
         l.setAdapter(adapter);
 
         l.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-
                if(id == 0){
                    goToPocketList();
-               }
-               else if(id == 1){
+               } else if(id == 1) {
+                   goToFindStore();
+               } else if(id == 2){
                    goToFindStore();
                }
-               else if(id == 2){
+               else if(id == 3){
                     goToSearch();
                }
-               else if(id == 3){
+               else if(id == 4){
                    goToTrending();
                }
             }
