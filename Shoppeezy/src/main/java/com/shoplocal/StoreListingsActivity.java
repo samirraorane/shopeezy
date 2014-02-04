@@ -30,6 +30,7 @@ import java.io.IOException;
 public class StoreListingsActivity extends Activity {
 
     private ListView l;
+    private String storeId;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class StoreListingsActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         Intent intent = getIntent();
-        String storeId = intent.getStringExtra(FindStoreActivity.STORE_INFO);
+        storeId = intent.getStringExtra(FindStoreActivity.STORE_INFO);
 
         super.onCreate(savedInstanceState);
 
@@ -64,14 +65,18 @@ public class StoreListingsActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                AlertDialog.Builder adb;
-                adb = new AlertDialog.Builder(
-                        StoreListingsActivity.this);
-                adb.setTitle("ListView OnClick");
-                adb.setMessage("Selected Item is = "
-                        + l.getItemAtPosition(position));
-                adb.setPositiveButton("Ok", null);
-                adb.show();
+                        //+ l.getItemAtPosition(position));
+                JSONObject current = (JSONObject)l.getItemAtPosition(position);
+                String listingId = "-2045209433"; //fail over
+                try {
+                    listingId = current.getString("ID");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(StoreListingsActivity.this, ItemDetailActivity.class);
+                intent.putExtra("STORE_ID", storeId);
+                intent.putExtra("LISTING_ID", listingId);
+                startActivity(intent);
             }
         });
     }

@@ -10,23 +10,54 @@
          TextureView, etc. -->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|bottom">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/itemTitle"
+            android:id="@+id/itemDescription"
+            android:text="Description"
+            android:layout_marginTop="89dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="94dp" />
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/itemPrice"
-            android:layout_gravity="left|top"
-            android:layout_alignRight="@+id/itemTitle" />
+            android:text="Deal"
+            android:id="@+id/itemDeal"
+            android:layout_below="@+id/itemDescription"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="44dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listingImage"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="86dp" />
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemPrice"
+        android:layout_gravity="left|top"
+        android:layout_alignRight="@+id/itemTitle"
+        android:text="Price"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/itemTitle"
+        android:layout_marginTop="44dp"
+        android:text="Title"
+        android:layout_below="@+id/itemPrice"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->

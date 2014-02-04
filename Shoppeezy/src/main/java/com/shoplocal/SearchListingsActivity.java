@@ -92,20 +92,19 @@ public class SearchListingsActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-                AlertDialog.Builder adb;
-                adb = new AlertDialog.Builder(
-                        SearchListingsActivity.this);
-                adb.setTitle("ListView OnClick");
-                adb.setMessage("Selected Item is = "
-                        + l.getItemAtPosition(position));
-                adb.setPositiveButton("Ok", null);
-                adb.show();
 
-
+                JSONObject current = (JSONObject)l.getItemAtPosition(position);
+                String listingId = "-2045209433"; //fail over
+                String storeId = "2652663";
+                try {
+                    listingId = current.getString("listing_id");
+                    storeId = current.getJSONObject("pretailer").getString("store_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(SearchListingsActivity.this, ItemDetailActivity.class);
-                intent.putExtra("CAMPAIGN_ID", "52efcba89b8240b8dd8cdf70");
-                intent.putExtra("STORE_ID", "2652663");
-                intent.putExtra("LISTING_ID", "-2045209433");
+                intent.putExtra("STORE_ID", storeId);
+                intent.putExtra("LISTING_ID", listingId);
                 startActivity(intent);
             }
         });

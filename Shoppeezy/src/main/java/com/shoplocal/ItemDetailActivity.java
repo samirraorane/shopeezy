@@ -3,6 +3,8 @@ package com.shoplocal;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +41,7 @@ import java.net.URL;
 
 public class ItemDetailActivity extends Activity {
 
-    TextView title, price, description;
+    TextView title, price, description, deal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,19 +50,27 @@ public class ItemDetailActivity extends Activity {
 
         title = (TextView) findViewById(R.id.itemTitle);
         price = (TextView) findViewById(R.id.itemPrice);
+        description = (TextView) findViewById(R.id.itemDescription);
+        deal = (TextView) findViewById(R.id.itemDeal);
 
 
         Intent intent = getIntent();
-        String campaignId = intent.getStringExtra("CAMPAIGN_ID");
         String storeId = intent.getStringExtra("STORE_ID");
         String listingId = intent.getStringExtra("LISTING_ID");
 
-        String url = "http://api2.shoplocal.com/retail/"+campaignId+"/2013.1/json/Listing?storeid="+storeId+"&listingid=" + listingId;
+        String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Listing?storeid="+storeId+"&listingid=" + listingId;
         new AsyncApi().execute(url);
     }
     public void doStuff(JSONObject value) throws JSONException {
-        Log.v("ShopLocal", value.toString());
         title.setText(value.getString("Title"));
+        price.setText("$" + value.getString("FinalPrice"));
+        description.setText(value.getString("Description"));
+        deal.setText(value.getString("Deal"));
+
+        String imageUrl = value.getString("ImageLocation");
+
+        new DownloadImageTask((ImageView) findViewById(R.id.listingImage))
+                .execute(imageUrl);
     }
 
     public class AsyncApi extends AsyncTask<String, Void, JSONObject> {
@@ -67,7 +78,7 @@ public class ItemDetailActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... params){
             String URL = params[0];
-            return Api.getResultFromApi(URL, "data");
+            return Api.getResultFromApi(URL, "Results");
         }
 
         @Override
@@ -78,6 +89,31 @@ public class ItemDetailActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }
