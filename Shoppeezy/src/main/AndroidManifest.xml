@@ -44,31 +44,35 @@
             android:name="com.shoplocal.SearchListingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_search_product"
-            android:parentActivityName="com.shoplocal.FullscreenActivity"
+            android:parentActivityName="com.shoplocal.SearchActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name="com.shoplocal.SearchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_search"
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name="com.shoplocal.ItemDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_item_detail"
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name="com.shoplocal.PocketListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_pocket_list"
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
             android:name="com.shoplocal.TrendingListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_trending"
+            android:parentActivityName="com.shoplocal.FullscreenActivity"
             android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
