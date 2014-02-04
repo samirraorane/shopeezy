@@ -44,7 +44,7 @@ import java.net.URL;
 public class ItemDetailActivity extends Activity {
 
     TextView title, price, description, deal;
-    String storeId, listingId;
+    String storeId, listingId, imageUrl;
     SqlHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class ItemDetailActivity extends Activity {
         String _price = price.getText().toString();
         String _description = description.getText().toString();
 
-        PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description);
+        PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description, imageUrl);
         db.addPocketEntry(p);
     }
 
@@ -82,7 +82,7 @@ public class ItemDetailActivity extends Activity {
         description.setText(value.getString("Description"));
         deal.setText(value.getString("Deal"));
 
-        String imageUrl = value.getString("ImageLocation");
+        imageUrl = value.getString("ImageLocation");
 
         new DownloadImageTask((ImageView) findViewById(R.id.listingImage))
                 .execute(imageUrl);
