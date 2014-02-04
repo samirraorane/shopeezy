@@ -48,7 +48,8 @@
             android:text="Save to Pocket"
             android:id="@+id/pocketBtn"
             android:layout_alignTop="@+id/listingImage"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:onClick="saveToPocket" />
 
         <TextView
             android:layout_width="wrap_content"

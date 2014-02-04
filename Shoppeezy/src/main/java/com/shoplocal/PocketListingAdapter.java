@@ -66,8 +66,10 @@ public class PocketListingAdapter extends BaseAdapter {
         // load controls from layout resources
         TextView listingName = (TextView)v.findViewById(R.id.listingName);
         TextView listingPrice = (TextView)v.findViewById(R.id.listingPrice);
-        new DownloadImageTask((ImageView) v.findViewById(R.id.listingImage))
-                .execute(imageUrl);
+        if(imageUrl != null){
+            new DownloadImageTask((ImageView) v.findViewById(R.id.listingImage))
+                    .execute(imageUrl);
+        }
 
         // set data to display
         listingName.setText(name);
