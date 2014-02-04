@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class PocketListActivity extends Activity {
 
@@ -47,9 +48,12 @@ public class PocketListActivity extends Activity {
 
         db = new SqlHelper(this);
 
+        List<PocketEntry> list = db.getAllPocketEntries();
+
         setContentView(R.layout.activity_pocket_list);
         l = (ListView) findViewById(R.id.pocketListView);
 
-        setContentView(R.layout.activity_pocket_list);
+        PocketListingAdapter adapter = new PocketListingAdapter(this, list);
+        l.setAdapter(adapter);
     }
 }

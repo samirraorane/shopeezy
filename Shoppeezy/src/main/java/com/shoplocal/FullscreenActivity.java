@@ -53,7 +53,11 @@ public class FullscreenActivity extends Activity {
         {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
             {
-               if(id == 1){
+
+               if(id == 0){
+                   goToPocketList();
+               }
+               else if(id == 1){
                    goToFindStore();
                }
                else if(id == 2){
@@ -61,6 +65,11 @@ public class FullscreenActivity extends Activity {
                }
             }
         });
+    }
+
+    private void goToPocketList() {
+        Intent intent = new Intent(this, PocketListActivity.class);
+        startActivity(intent);
     }
 
     private void goToFindStore() {

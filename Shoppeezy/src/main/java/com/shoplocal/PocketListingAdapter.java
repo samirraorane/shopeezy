@@ -12,35 +12,32 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shoplocal.util.PocketEntry;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.List;
 
 public class PocketListingAdapter extends BaseAdapter {
     private Context mContext;
-    private JSONArray mlistings;
+    private List<PocketEntry> mlistings;
 
-    public PocketListingAdapter(Context c, JSONArray list) {
+    public PocketListingAdapter(Context c, List<PocketEntry> list) {
         mContext = c;
         mlistings = list;
     }
 
     @Override
     public int getCount() {
-        return mlistings.length();
+        return mlistings.size();
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        try {
-            return mlistings.getJSONObject(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public PocketEntry getItem(int position) {
+        return mlistings.get(position);
     }
 
     @Override
@@ -51,25 +48,11 @@ public class PocketListingAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // get the selected entry
-        JSONObject listing = null;
-        try {
-            listing = mlistings.getJSONObject(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        PocketEntry listing = mlistings.get(position);
 
-        String name = "";
-        String price = "";
-        String imageUrl = "";
-
-        try {
-            name = listing.getString("Title");
-            price = listing.getString("FinalPrice");
-            imageUrl = listing.getString("ImageLocation");
-            imageUrl = imageUrl.replace("200", "100");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String name = listing.getTitle();
+        String price = listing.getPrice();
+        String imageUrl = listing.getImage();
 
         // reference to convertView
         View v = convertView;
@@ -88,7 +71,7 @@ public class PocketListingAdapter extends BaseAdapter {
 
         // set data to display
         listingName.setText(name);
-        listingPrice.setText("$" + price);
+        listingPrice.setText(price);
 
         // return view
         return v;

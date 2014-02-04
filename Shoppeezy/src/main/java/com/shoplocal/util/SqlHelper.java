@@ -16,10 +16,10 @@ public class SqlHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "pocketlistingdb";
+    private static final String DATABASE_NAME = "stupidasspocketfuckingdb";
 
     // Contacts table name
-    private static final String TABLE_LISTINGS = "listings";
+    private static final String TABLE_LISTINGS = "listingsthatfuckingsuck";
 
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
@@ -89,7 +89,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
     // Getting All Contacts
-    public List<PocketEntry> getAllContacts() {
+    public List<PocketEntry> getAllPocketEntries() {
         List<PocketEntry> pocketList = new ArrayList<PocketEntry>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_LISTINGS;

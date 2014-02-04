@@ -41,6 +41,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static android.app.PendingIntent.getActivity;
+
 public class ItemDetailActivity extends Activity {
 
     TextView title, price, description, deal;
@@ -67,13 +69,22 @@ public class ItemDetailActivity extends Activity {
         new AsyncApi().execute(url);
     }
 
-    public void saveToPocket(){
+    public void saveToPocket(View view){
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Adding to Pocket")
+                .setTitle("Adding to Pocket");
+
         String _title = title.getText().toString();
         String _price = price.getText().toString();
         String _description = description.getText().toString();
 
+
         PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description, imageUrl);
         db.addPocketEntry(p);
+
+        AlertDialog dialog = builder.create();
     }
 
     public void doStuff(JSONObject value) throws JSONException {

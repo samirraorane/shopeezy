@@ -5,7 +5,6 @@ public class PocketEntry {
     //private variables
     String _id;
     String _storeid;
-    String _campaignid;
     String _title;
     String _price;
     String _description;
@@ -39,6 +38,7 @@ public class PocketEntry {
     public String getDescription(){
         return this._description;
     }
+
     public String getImage(){
         return this._img;
     }
