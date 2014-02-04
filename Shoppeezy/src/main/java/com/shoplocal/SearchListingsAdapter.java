@@ -66,7 +66,7 @@ public class SearchListingsAdapter extends BaseAdapter {
             name = listing.getString("title");
             retailer = listing.getJSONObject("pretailer").getString("pretailer_name");
             imageUrl = listing.getString("listing_image_url");
-            imageUrl = imageUrl.replace("200", "100");
+            imageUrl = imageUrl.replace("200", "150");
         } catch (JSONException e) {
             e.printStackTrace();
         }

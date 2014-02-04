@@ -3,6 +3,7 @@ package com.shoplocal;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -33,6 +34,7 @@ public class FindStoreActivity extends Activity {
     public final static String STORE_NAME = "com.shoplocal.store_name";
     private ListView l;
     private JSONArray stores;
+    ProgressDialog progress;
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class FindStoreActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
 
         setContentView(R.layout.activity_store_find);
 
@@ -120,6 +127,8 @@ public class FindStoreActivity extends Activity {
         protected void onPostExecute(JSONArray result) {
             super.onPreExecute();
             FindStoreActivity.this.doStuff(result);
+
+            progress.dismiss();
         }
 
     }
