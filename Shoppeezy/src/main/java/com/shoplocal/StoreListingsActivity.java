@@ -3,6 +3,7 @@ package com.shoplocal;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,20 +54,8 @@ public class StoreListingsActivity extends Activity {
 
         setTitle("Deals At " + storeName);
 
-        l = (ListView) findViewById(R.id.storelistings);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
-        /*inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                searchStoreListings();
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-            @Override
-            public void afterTextChanged(Editable arg0) {}
-        });*/
+        l = (ListView) findViewById(R.id.storelistings);
 
         final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=" + storeId;
         new AsyncApi().execute(url);
@@ -83,7 +73,13 @@ public class StoreListingsActivity extends Activity {
         }
     }
 
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(inputSearch.getWindowToken(), 0);
+    }
+
     public void doStuff(JSONArray values){
+        closeKeyboard();
         if(values == null){
             values = new JSONArray();
         }
