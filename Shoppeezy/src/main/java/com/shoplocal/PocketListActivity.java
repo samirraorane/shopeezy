@@ -56,6 +56,23 @@ public class PocketListActivity extends Activity {
         PocketListingAdapter adapter = new PocketListingAdapter(this, list);
         l.setAdapter(adapter);
 
+        l.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long id)
+            {
+
+                PocketEntry current = (PocketEntry)l.getItemAtPosition(position);
+                String listingId = "-2045209433"; //fail over
+                String storeId = "2652663";
+                listingId = current.getId();
+                storeId = current.getStoreId();
+                Intent intent = new Intent(PocketListActivity.this, ItemDetailActivity.class);
+                intent.putExtra("STORE_ID", storeId);
+                intent.putExtra("LISTING_ID", listingId);
+                startActivity(intent);
+            }
+        });
+
         db.close();
     }
 }
