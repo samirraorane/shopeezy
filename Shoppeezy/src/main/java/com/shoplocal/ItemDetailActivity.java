@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shoplocal.util.Api;
+import com.shoplocal.util.PocketEntry;
+import com.shoplocal.util.SqlHelper;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -42,6 +44,8 @@ import java.net.URL;
 public class ItemDetailActivity extends Activity {
 
     TextView title, price, description, deal;
+    String storeId, listingId;
+    SqlHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +56,26 @@ public class ItemDetailActivity extends Activity {
         price = (TextView) findViewById(R.id.itemPrice);
         description = (TextView) findViewById(R.id.itemDescription);
         deal = (TextView) findViewById(R.id.itemDeal);
+        db = new SqlHelper(this);
 
 
         Intent intent = getIntent();
-        String storeId = intent.getStringExtra("STORE_ID");
-        String listingId = intent.getStringExtra("LISTING_ID");
+        storeId = intent.getStringExtra("STORE_ID");
+        listingId = intent.getStringExtra("LISTING_ID");
 
-        String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Listing?storeid="+storeId+"&listingid=" + listingId;
+        String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/Listing?storeid="+ storeId +"&listingid=" + listingId;
         new AsyncApi().execute(url);
     }
+
+    public void saveToPocket(){
+        String _title = title.getText().toString();
+        String _price = price.getText().toString();
+        String _description = description.getText().toString();
+
+        PocketEntry p = new PocketEntry(listingId, storeId, _title, _price, _description);
+        db.addPocketEntry(p);
+    }
+
     public void doStuff(JSONObject value) throws JSONException {
         title.setText(value.getString("Title"));
         price.setText("$" + value.getString("FinalPrice"));

@@ -38,6 +38,14 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="86dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pocketString"
+            android:id="@+id/pocketBtn"
+            android:layout_alignTop="@+id/listingImage"
+            android:layout_alignParentLeft="true" />
     </RelativeLayout>
 
     <TextView
