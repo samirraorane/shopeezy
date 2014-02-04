@@ -63,6 +63,9 @@ public class FullscreenActivity extends Activity {
                else if(id == 2){
                     goToSearch();
                }
+               else if(id == 3){
+                   goToTrending();
+               }
             }
         });
     }
@@ -79,6 +82,11 @@ public class FullscreenActivity extends Activity {
 
     private void goToSearch() {
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToTrending(){
+        Intent intent = new Intent(this, TrendingListActivity.class);
         startActivity(intent);
     }
 }
