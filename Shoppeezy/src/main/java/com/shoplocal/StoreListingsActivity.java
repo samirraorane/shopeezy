@@ -56,6 +56,7 @@ public class StoreListingsActivity extends Activity {
 
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         l = (ListView) findViewById(R.id.storelistings);
+        closeKeyboard();
 
         final String url = "http://api2.shoplocal.com/retail/6883099d72e1ca52/2013.1/json/AllListings?storeid=" + storeId;
         new AsyncApi().execute(url);
