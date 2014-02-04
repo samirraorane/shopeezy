@@ -2,6 +2,7 @@ package com.shoplocal;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,10 +51,16 @@ public class ItemDetailActivity extends Activity {
     Button pocketBtn;
     String storeId, listingId, imageUrl;
     Boolean readyState = false;
+    ProgressDialog progress;
     SqlHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.show();
 
         setContentView(R.layout.activity_item_detail);
 
@@ -149,6 +156,8 @@ public class ItemDetailActivity extends Activity {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
             readyState = true;
+
+            progress.dismiss();
         }
     }
 }
