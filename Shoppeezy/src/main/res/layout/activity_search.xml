@@ -23,6 +23,12 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
         <LinearLayout android:id="@+id/fullscreen_content_controls"
             style="?buttonBarStyle"
             android:layout_width="match_parent"
@@ -32,14 +38,6 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
-            <Button android:id="@+id/searchBtn"
-                style="?buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/searchAction"
-                android:onClick="processSearch" />
-
         </LinearLayout>
 
         <EditText
@@ -48,6 +46,17 @@
             android:hint="@string/searchPlaceholder"
             android:layout_gravity="left|top"
             android:id="@+id/searchText" />
-    </FrameLayout>
+
+        <Button android:id="@+id/searchBtn"
+            style="?buttonBarButtonStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/searchAction"
+            android:onClick="processSearch"
+            android:layout_gravity="center"
+            android:layout_below="@+id/searchText"
+            android:layout_alignParentLeft="true" />
+    </RelativeLayout>
 
 </FrameLayout>
