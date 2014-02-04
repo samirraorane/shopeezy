@@ -9,13 +9,15 @@ public class PocketEntry {
     String _title;
     String _price;
     String _description;
+    String _img;
 
-    public PocketEntry(String id, String storeid, String title, String price, String desc){
+    public PocketEntry(String id, String storeid, String title, String price, String desc, String img){
         this._id = id;
         this._storeid = storeid;
         this._title = title;
         this._price = price;
         this._description = desc;
+        this._img = img;
     }
 
     public String getId(){
@@ -36,5 +38,8 @@ public class PocketEntry {
 
     public String getDescription(){
         return this._description;
+    }
+    public String getImage(){
+        return this._img;
     }
 }
